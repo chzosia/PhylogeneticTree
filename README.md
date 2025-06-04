@@ -1,6 +1,6 @@
 # UPGMA Phylogenetic Tree Builder
 
-This project allows you to construct a phylogenetic tree using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) algorithm. It can compute distances from a set of DNA sequences or use a precomputed distance matrix. The resulting tree is visualized and saved as an image, and results are logged in a text file.
+This project allows you to construct a phylogenetic tree using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) algorithm. It can compute distances from a set of DNA sequences or use a precomputed distance matrix. The resulting tree is visualized, and the analysis is saved in a report.
 
 ## Features
 
@@ -8,8 +8,9 @@ This project allows you to construct a phylogenetic tree using the UPGMA (Unweig
 - Validation of DNA sequences: Ensures that sequences contain only valid DNA characters (A, C, G, T).
 - Distance Calculation: Automatically computes a pairwise distance matrix from input sequences.
 - UPGMA Clustering: Builds a phylogenetic tree based on genetic distances.
-- Dendrogram Visualization: Saves the tree structure as a PNG image.
-- Result Export: Saves a detailed clustering report and (if applicable) the computed distance matrix.
+- Dendrogram Visualization: Generates and saves a dendrogram tree image representing phylogenetic relationships.
+- PDF Report Generation: Outputs a styled PDF containing the input sequences, pairwise distance matrix and the dendrogram image.
+- Result Export: Saves the computed distance matrix, dendrogram image, and clustering linkage data for further use.
   
 ## How to Run
 
@@ -38,6 +39,7 @@ After running, the following files will be generated:
 - upgma_tree.png: A dendrogram representing the phylogenetic tree.
 - upgma_results.txt: Text file with linkage data and input matrix/labels.
 - distance_matrix.csv (only for sequence input): The computed pairwise distances.
+- phylo_report.pdf: A comprehensive PDF report with sequences, distance matrix, and tree.
   
 ## Input Formats
 
