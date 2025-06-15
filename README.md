@@ -6,7 +6,7 @@ This project allows you to construct a phylogenetic tree using the UPGMA (Unweig
 
 - Flexible Input: Load DNA sequences from a FASTA file, input them manually, or provide a custom distance matrix via CSV.
 - Validation of DNA sequences: Ensures that sequences contain only valid DNA characters (A, C, G, T).
-- Distance Calculation: Automatically computes a pairwise distance matrix from input sequences.
+- Distance Calculation: Computes pairwise genetic distances using Needleman-Wunsch global alignment with customizable scoring parameters.
 - UPGMA Clustering: Builds a phylogenetic tree based on genetic distances.
 - Dendrogram Visualization: Generates and saves a dendrogram tree image representing phylogenetic relationships.
 - PDF Report Generation: Outputs a styled PDF containing the input sequences, pairwise distance matrix and the dendrogram image.
