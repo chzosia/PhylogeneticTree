@@ -58,9 +58,9 @@ ACTGATAC
 A square symmetric CSV file:
 ```bash
 ,Seq1,Seq2,Seq3
-Seq1,0,0.1,0.2
-Seq2,0.1,0,0.3
-Seq3,0.2,0.3,0
+Seq1,0,1,2
+Seq2,1,0,3
+Seq3,2,3,0
 ```
 
 ## Customization
