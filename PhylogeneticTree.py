@@ -63,23 +63,20 @@ def load_sequences(file=None, seqs=None):
     return sequences, labels
 
 
-def compute_distance(seq1, seq2, match=1, mismatch=0, gap=-1):
+def needleman_wunsch_score(seq1, seq2, match=1, mismatch=0, gap=-1):
     """
-    Computes a normalized distance between two DNA sequences based on
-    a global alignment scoring with match, mismatch, and gap penalties.
+    Classic Needleman-Wunsch global alignment score without normalization.
 
     Arguments:
         seq1 (str): First DNA sequence.
         seq2 (str): Second DNA sequence.
-        match (int, optional): Score for a match (default: 1).
-        mismatch (int, optional): Penalty for mismatch (default: 0).
-        gap (int, optional): Penalty for gap (default: -1).
+        match (int): Score for a match.
+        mismatch (int): Penalty for mismatch.
+        gap (int): Penalty for a gap.
 
     Returns:
-        float: Normalized distance between sequences (0 to 1),
-               where 0 means identical and 1 means completely different.
+        int: Final alignment score (can be negative or positive).
     """
-
     len1, len2 = len(seq1), len(seq2)
     dp = np.zeros((len1 + 1, len2 + 1))
 
@@ -95,10 +92,7 @@ def compute_distance(seq1, seq2, match=1, mismatch=0, gap=-1):
             insert = dp[i][j - 1] + gap
             dp[i][j] = max(diag, delete, insert)
 
-    max_score = min(len1, len2) * match
-    identity = dp[len1][len2] / max_score if max_score != 0 else 0
-    return 1 - identity
-
+    return dp[len1][len2]
 
 def build_distance_matrix(sequences, match=1, mismatch=0, gap=-1):
     """
@@ -117,10 +111,16 @@ def build_distance_matrix(sequences, match=1, mismatch=0, gap=-1):
 
     n = len(sequences)
     matrix = np.zeros((n, n))
+
     for i in range(n):
         for j in range(i + 1, n):
-            dist = compute_distance(sequences[i], sequences[j], match, mismatch, gap)
+            score = needleman_wunsch_score(sequences[i], sequences[j], match, mismatch, gap)
+            # Here we turn similarity into distance in this way to avoid negative values
+            # (linage method used further accepts only positive values)
+            max_possible = max(len(sequences[i]), len(sequences[j])) * match
+            dist = max_possible - score
             matrix[i][j] = matrix[j][i] = dist
+
     return matrix
 
 
@@ -143,9 +143,7 @@ def upgma_clustering(dist_matrix, labels, output_img="upgma_tree.png"):
     plt.xticks(rotation=45, ha='right', fontsize=8)
     plt.title("UPGMA Phylogenetic Tree")
 
-    # Removes y-axis ticks and label for a cleaner look
-    plt.gca().yaxis.set_ticks([])
-    plt.gca().set_ylabel('')
+    plt.ylabel("Distance")
 
     plt.tight_layout()
     plt.savefig(output_img, dpi=300, bbox_inches='tight')
